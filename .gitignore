@@ -1,0 +1,32 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.log
+.vs/
+.vscode/
+
+# EF Core Migrations (keep migrations folder but ignore generated files)
+**/Migrations/*.Designer.cs
+**/Migrations/*ModelSnapshot.cs
+
+# Database
+*.mdf
+*.ldf
+*.db
+
+# Angular
+node_modules/
+dist/
+.angular/
+*.log
+
+# Environment
+appsettings.Development.json
+*.env
+
+# OS
+.DS_Store
+Thumbs.db
