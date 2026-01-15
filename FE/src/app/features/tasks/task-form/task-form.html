@@ -1,0 +1,83 @@
+<div class="card sticky-top" style="top: 20px;">
+  <div class="card-header">
+    <h5 class="mb-0">{{ isEditMode ? 'Edit Task' : 'Create New Task' }}</h5>
+  </div>
+
+  <div class="card-body">
+    <form (ngSubmit)="onSubmit()" #taskForm="ngForm">
+      <div class="mb-3">
+        <label for="title" class="form-label">Title <span class="text-danger">*</span></label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          [(ngModel)]="formData.title"
+          name="title"
+          required
+          [disabled]="loading"
+          placeholder="Enter task title"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea
+          class="form-control"
+          id="description"
+          [(ngModel)]="formData.description"
+          name="description"
+          rows="3"
+          [disabled]="loading"
+          placeholder="Enter task description (optional)"
+        ></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="priority" class="form-label">Priority</label>
+        <select
+          class="form-select"
+          id="priority"
+          [(ngModel)]="formData.priority"
+          name="priority"
+          [disabled]="loading"
+        >
+          <option [value]="1">Low</option>
+          <option [value]="2">Medium</option>
+          <option [value]="3">High</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="dueDate" class="form-label">Due Date</label>
+        <input
+          type="datetime-local"
+          class="form-control"
+          id="dueDate"
+          [(ngModel)]="formData.dueDate"
+          name="dueDate"
+          [disabled]="loading"
+        />
+      </div>
+
+      <div class="d-grid gap-2">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="loading || !taskForm.valid"
+        >
+          <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+          {{ loading ? 'Saving...' : (isEditMode ? 'Update Task' : 'Create Task') }}
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          (click)="onCancel()"
+          [disabled]="loading"
+        >
+          {{ isEditMode ? 'Cancel' : 'Clear' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

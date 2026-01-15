@@ -1,0 +1,25 @@
+<div class="dashboard-container">
+  <div class="row g-4">
+    <!-- Task List (Left Side) -->
+    <div class="col-md-7">
+      <app-task-list
+        [sortBy]="sortBy"
+        [filterCompleted]="filterCompleted"
+        [filterPriority]="filterPriority"
+        (taskSelected)="onTaskSelected($event)"
+        (sortChanged)="onSortChange($event)"
+        (filterChanged)="onFilterChange($event)"
+        (newTask)="onNewTask()"
+      ></app-task-list>
+    </div>
+
+    <!-- Task Form (Right Side) -->
+    <div class="col-md-5">
+      <app-task-form
+        [task]="selectedTask"
+        (taskSaved)="onTaskSaved()"
+        (cancelled)="onTaskCancelled()"
+      ></app-task-form>
+    </div>
+  </div>
+</div>
