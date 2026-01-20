@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Task } from '../../../models/task.model';
 import { TaskService } from '../../../services/task.service';
 import { ToastService } from '../../../services/toast.service';
+import { TaskList } from '../task-list/task-list';
 
 @Component({
   selector: 'app-task-dashboard',
@@ -10,6 +11,8 @@ import { ToastService } from '../../../services/toast.service';
   styleUrl: './task-dashboard.scss',
 })
 export class TaskDashboard implements OnInit {
+  @ViewChild('taskList') taskList!: TaskList;
+  
   selectedTask: Task | null = null;
   sortBy: string = 'date';
   filterCompleted: boolean | null = null;
@@ -29,6 +32,9 @@ export class TaskDashboard implements OnInit {
 
   onTaskSaved(): void {
     this.selectedTask = null;
+    if (this.taskList) {
+      this.taskList.loadTasks();
+    }
   }
 
   onTaskCancelled(): void {

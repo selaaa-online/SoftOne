@@ -23,22 +23,26 @@ public class TasksController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllTasks([FromQuery] string? sortBy, [FromQuery] bool? isCompleted, [FromQuery] int? priority)
     {
-        var userId = GetCurrentUserId();
-        if (userId == null)
-            return Unauthorized(new { message = "Not authenticated" });
+        // Authentication temporarily disabled
+        var userId = 1; // Default user ID
+        // var userId = GetCurrentUserId();
+        // if (userId == null)
+        //     return Unauthorized(new { message = "Not authenticated" });
 
-        var tasks = await _taskService.GetAllTasksAsync(userId.Value, sortBy, isCompleted, priority);
+        var tasks = await _taskService.GetAllTasksAsync(userId, sortBy, isCompleted, priority);
         return Ok(tasks);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetTaskById(int id)
     {
-        var userId = GetCurrentUserId();
-        if (userId == null)
-            return Unauthorized(new { message = "Not authenticated" });
+        // Authentication temporarily disabled
+        var userId = 1; // Default user ID
+        // var userId = GetCurrentUserId();
+        // if (userId == null)
+        //     return Unauthorized(new { message = "Not authenticated" });
 
-        var task = await _taskService.GetTaskByIdAsync(id, userId.Value);
+        var task = await _taskService.GetTaskByIdAsync(id, userId);
 
         if (task == null)
             return NotFound(new { message = "Task not found" });
@@ -49,9 +53,11 @@ public class TasksController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateTask([FromBody] CreateTaskDto createTaskDto)
     {
-        var userId = GetCurrentUserId();
-        if (userId == null)
-            return Unauthorized(new { message = "Not authenticated" });
+        // Authentication temporarily disabled
+        var userId = 1; // Default user ID
+        // var userId = GetCurrentUserId();
+        // if (userId == null)
+        //     return Unauthorized(new { message = "Not authenticated" });
 
         if (string.IsNullOrWhiteSpace(createTaskDto.Title))
             return BadRequest(new { message = "Task title is required" });
@@ -59,16 +65,18 @@ public class TasksController : ControllerBase
         if (createTaskDto.Priority < 1 || createTaskDto.Priority > 3)
             return BadRequest(new { message = "Priority must be between 1 and 3" });
 
-        var task = await _taskService.CreateTaskAsync(createTaskDto, userId.Value);
+        var task = await _taskService.CreateTaskAsync(createTaskDto, userId);
         return CreatedAtAction(nameof(GetTaskById), new { id = task.TaskId }, task);
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateTask(int id, [FromBody] UpdateTaskDto updateTaskDto)
     {
-        var userId = GetCurrentUserId();
-        if (userId == null)
-            return Unauthorized(new { message = "Not authenticated" });
+        // Authentication temporarily disabled
+        var userId = 1; // Default user ID
+        // var userId = GetCurrentUserId();
+        // if (userId == null)
+        //     return Unauthorized(new { message = "Not authenticated" });
 
         if (string.IsNullOrWhiteSpace(updateTaskDto.Title))
             return BadRequest(new { message = "Task title is required" });
@@ -76,7 +84,7 @@ public class TasksController : ControllerBase
         if (updateTaskDto.Priority < 1 || updateTaskDto.Priority > 3)
             return BadRequest(new { message = "Priority must be between 1 and 3" });
 
-        var task = await _taskService.UpdateTaskAsync(id, updateTaskDto, userId.Value);
+        var task = await _taskService.UpdateTaskAsync(id, updateTaskDto, userId);
 
         if (task == null)
             return NotFound(new { message = "Task not found" });
@@ -87,11 +95,13 @@ public class TasksController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteTask(int id)
     {
-        var userId = GetCurrentUserId();
-        if (userId == null)
-            return Unauthorized(new { message = "Not authenticated" });
+        // Authentication temporarily disabled
+        var userId = 1; // Default user ID
+        // var userId = GetCurrentUserId();
+        // if (userId == null)
+        //     return Unauthorized(new { message = "Not authenticated" });
 
-        var success = await _taskService.DeleteTaskAsync(id, userId.Value);
+        var success = await _taskService.DeleteTaskAsync(id, userId);
 
         if (!success)
             return NotFound(new { message = "Task not found" });
@@ -102,11 +112,13 @@ public class TasksController : ControllerBase
     [HttpPatch("{id}/complete")]
     public async Task<IActionResult> ToggleTaskCompletion(int id)
     {
-        var userId = GetCurrentUserId();
-        if (userId == null)
-            return Unauthorized(new { message = "Not authenticated" });
+        // Authentication temporarily disabled
+        var userId = 1; // Default user ID
+        // var userId = GetCurrentUserId();
+        // if (userId == null)
+        //     return Unauthorized(new { message = "Not authenticated" });
 
-        var success = await _taskService.ToggleTaskCompletionAsync(id, userId.Value);
+        var success = await _taskService.ToggleTaskCompletionAsync(id, userId);
 
         if (!success)
             return NotFound(new { message = "Task not found" });

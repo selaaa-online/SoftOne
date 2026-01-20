@@ -10,7 +10,8 @@ const routes: Routes = [
   {
     path: 'tasks',
     loadChildren: () => import('./features/tasks/tasks-module').then(m => m.TasksModule),
-    canActivate: [AuthGuard]
+    // Authentication temporarily disabled
+    // canActivate: [AuthGuard]
   },
   { path: '', redirectTo: '/tasks', pathMatch: 'full' },
   { path: '**', redirectTo: '/tasks' }

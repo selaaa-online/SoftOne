@@ -43,12 +43,12 @@ public class AuthController : ControllerBase
     [HttpGet("current-user")]
     public async Task<IActionResult> GetCurrentUser()
     {
-        var userId = HttpContext.Session.GetInt32("UserId");
+        //var userId = HttpContext.Session.GetInt32("UserId");
 
-        if (userId == null)
-            return Unauthorized(new { message = "Not authenticated" });
+        //if (userId == null)
+        //    return Unauthorized(new { message = "Not authenticated" });
 
-        var user = await _authService.GetCurrentUserAsync(userId.Value);
+        var user = await _authService.GetCurrentUserAsync(1);
 
         if (user == null)
             return NotFound(new { message = "User not found" });

@@ -13,7 +13,8 @@ export class AuthService {
   public currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient) {
-    this.checkCurrentUser();
+    // Authentication temporarily disabled
+    // this.checkCurrentUser();
   }
 
   login(credentials: LoginRequest): Observable<User> {

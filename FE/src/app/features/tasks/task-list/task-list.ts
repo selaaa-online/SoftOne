@@ -49,11 +49,15 @@ export class TaskList implements OnInit, OnChanges {
           this.loading = false;
         },
         error: (error) => {
-          this.toastService.showError('Failed to load tasks: ' + error.message);
+          console.error('Failed to load tasks:', error);
+          this.toastService.showError('Failed to load tasks: ' + (error.message || 'Unknown error'));
+          this.loading = false;
+          this.tasks = [];
+        },
+        complete: () => {
           this.loading = false;
         }
       });
-  }
 
   onSortChange(sort: string): void {
     this.currentSort = sort;
@@ -95,17 +99,15 @@ export class TaskList implements OnInit, OnChanges {
 
   deleteTask(task: Task, event: Event): void {
     event.stopPropagation();
-    if (confirm(`Are you sure you want to delete "${task.title}"?`)) {
-      this.taskService.deleteTask(task.taskId).subscribe({
-        next: () => {
-          this.tasks = this.tasks.filter(t => t.taskId !== task.taskId);
-          this.toastService.showSuccess('Task deleted successfully');
-        },
-        error: (error) => {
-          this.toastService.showError('Failed to delete task: ' + error.message);
-        }
-      });
-    }
+    this.taskService.deleteTask(task.taskId).subscribe({
+      next: () => {
+        this.tasks = this.tasks.filter(t => t.taskId !== task.taskId);
+        this.toastService.showSuccess('Task deleted successfully');
+      },
+      error: (error) => {
+        this.toastService.showError('Failed to delete task: ' + error.message);
+      }
+    });
   }
 
   onNewTask(): void {
